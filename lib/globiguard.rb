@@ -137,7 +137,7 @@ module GlobiGuard
     def list = @transport.request("get", @base_path)
     def get(id) = @transport.request("get", "#{@base_path}/#{URI.encode_www_form_component(id)}")
     def create(body) = @transport.request("post", @base_path, body: body)
-    def post(suffix, body) = @transport.request("post", "#{@base_path}/#{suffix.sub(%r{\A/+}, "")}", body: body)
+    def post(suffix, body) = @transport.request("post", "#{@base_path}/#{URI.encode_www_form_component(suffix.sub(%r{\A/+}, ""))}", body: body)
   end
 
   class GovernedActions
