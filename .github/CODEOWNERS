@@ -1,0 +1,19 @@
+# GlobiGuard Project Code Owners
+# This file defines code owner responsibilities
+
+* @globi-explore/maintainers
+
+# Core SDK
+lib/ @globi-explore/maintainers
+
+# Tests
+test/ @globi-explore/maintainers
+
+# CI/CD and DevOps
+.github/ @globi-explore/maintainers
+globiguard.gemspec @globi-explore/maintainers
+Gemfile @globi-explore/maintainers
+
+# Documentation
+*.md @globi-explore/maintainers
+examples/ @globi-explore/maintainers

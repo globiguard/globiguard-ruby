@@ -1,0 +1,41 @@
+name: Security Scan
+
+on:
+  push:
+    branches: [ main, develop ]
+  schedule:
+    - cron: '0 2 * * 0'  # Weekly on Sunday at 2 AM UTC
+
+jobs:
+  security:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        ruby-version: ['3.1', '3.2', '3.3']
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Ruby ${{ matrix.ruby-version }}
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby-version }}
+          bundler-cache: true
+      
+      - name: Run Bundler Audit
+        continue-on-error: true
+        run: |
+          gem install bundler-audit
+          bundler-audit check --update || true
+      
+      - name: Run Brakeman
+        continue-on-error: true
+        run: |
+          gem install brakeman
+          brakeman -q -z -f json lib/ || true
+      
+      - name: Run RuboCop
+        continue-on-error: true
+        run: |
+          gem install rubocop
+          rubocop lib/ test/ || true
